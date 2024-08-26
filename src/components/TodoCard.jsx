@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 export default function TodoCard(props) {
   const { children, handleDeleteTodo, index, handleEditTodo, todo } = props;
 
-
-
   return (
     <li className="todoItem">
       {children || todo}
