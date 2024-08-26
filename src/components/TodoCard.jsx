@@ -10,14 +10,10 @@ export default function TodoCard(props) {
     <li className="todoItem">
       {children || todo}
       <div className="actionsContainer">
-        <button onClick={() => {
-          handleEditTodo(index);
-        }}>
+        <button onClick={() => handleEditTodo(index)}>
           <i className="fa-solid fa-pen-to-square"></i>
         </button>
-        <button onClick={() => {
-          handleDeleteTodo(index);
-        }}>
+        <button onClick={() => handleDeleteTodo(index)}>
           <i className="fa-regular fa-trash-can"></i>
         </button>
       </div>
@@ -26,9 +22,9 @@ export default function TodoCard(props) {
 }
 
 TodoCard.propTypes = {
-  children: PropTypes.node,  // Optional - allows passing content as children
+  children: PropTypes.node,
   handleDeleteTodo: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   handleEditTodo: PropTypes.func.isRequired,
-  todo: PropTypes.string.isRequired, // New prop for the actual todo content
+  todo: PropTypes.string.isRequired, // Ensure this is defined and passed correctly
 };
