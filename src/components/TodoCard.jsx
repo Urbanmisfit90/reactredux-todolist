@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 export default function TodoCard(props) {
   const { handleDeleteTodo, index, handleEditTodo, handleToggleTodo, todo } = props;
 
+  const textDecoration = todo.completed ? 'line-through' : 'none';
+
   return (
-    <li className="todoItem">
+    <li className="todoItem" style={{ textDecoration }}>
       <input
         type="checkbox"
         checked={todo.completed}
