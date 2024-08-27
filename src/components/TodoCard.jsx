@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function TodoCard(props) {
-  const { children, handleDeleteTodo, index, handleEditTodo, todo } = props;
+  const { handleDeleteTodo, index, handleEditTodo, handleToggleTodo, todo } = props;
 
   return (
     <li className="todoItem">
-      {children || todo}
+      <input
+        type="checkbox"
+        checked={todo.completed}
+        onChange={() => handleToggleTodo(index)}
+      />
+      <span>{todo.text}</span> {/* Render todo.text */}
       <div className="actionsContainer">
         <button onClick={() => handleEditTodo(index)}>
           <i className="fa-solid fa-pen-to-square"></i>
@@ -20,9 +25,13 @@ export default function TodoCard(props) {
 }
 
 TodoCard.propTypes = {
-  children: PropTypes.node,
   handleDeleteTodo: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   handleEditTodo: PropTypes.func.isRequired,
-  todo: PropTypes.string.isRequired, // Ensure this is defined and passed correctly
+  handleToggleTodo: PropTypes.func.isRequired,
+  todo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+  }).isRequired,
 };
