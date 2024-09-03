@@ -5,20 +5,35 @@ import TodoList from "./components/TodoList";
 function App() {
   const [todos, setTodos] = useState([]);
   const [todoValue, setTodoValue] = useState('');
+  const [editingTodoId, setEditingTodoId] = useState(null);
 
   function persistData(newList) {
     localStorage.setItem('todos', JSON.stringify({ todos: newList }));
   }
 
   function handleAddTodos(newTodoText) {
-    const newTodo = {
-      id: Date.now().toString(), // Unique ID
-      text: newTodoText,
-      completed: false
-    };
-    const newTodoList = [...todos, newTodo];
-    persistData(newTodoList);
-    setTodos(newTodoList);
+    if (editingTodoId) {
+      // Update existing todo
+      const updatedTodos = todos.map(todo =>
+        todo.id === editingTodoId
+          ? { ...todo, text: newTodoText }
+          : todo
+      );
+      persistData(updatedTodos);
+      setTodos(updatedTodos);
+      setEditingTodoId(null); // Clear editing state
+    } else {
+      // Add new todo
+      const newTodo = {
+        id: Date.now().toString(), // Unique ID
+        text: newTodoText,
+        completed: false
+      };
+      const newTodoList = [...todos, newTodo];
+      persistData(newTodoList);
+      setTodos(newTodoList);
+    }
+    setTodoValue('');
   }
 
   function handleDeleteTodo(index) {
@@ -27,10 +42,12 @@ function App() {
     setTodos(newTodoList);
   }
 
-  function handleEditTodo(index) {
-    const todoToEdit = todos[index];
-    setTodoValue(todoToEdit.text); // Set the text for editing
-    handleDeleteTodo(index);
+  function handleEditTodo(id) {
+    const todoToEdit = todos.find(todo => todo.id === id);
+    if (todoToEdit) {
+      setTodoValue(todoToEdit.text); // Set the text for editing
+      setEditingTodoId(id); // Set the editingTodoId to the current todo's id
+    }
   }
 
   function handleToggleTodo(index) {
