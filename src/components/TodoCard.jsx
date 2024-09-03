@@ -13,9 +13,10 @@ export default function TodoCard(props) {
     if (isEditing) {
       // Save the edit when toggling off edit mode
       handleSaveEdit();
+    } else {
+      setIsEditing(true);
     }
-    setIsEditing(!isEditing);
-    if (!isEditing) {
+    if (!isEditing && inputRef.current) {
       inputRef.current.focus(); // Focus the input field when editing starts
     }
   };
@@ -26,7 +27,7 @@ export default function TodoCard(props) {
 
   const handleSaveEdit = () => {
     if (editText.trim() !== '') {
-      handleEditTodo(index, editText.trim()); // Update todo with new text
+      handleEditTodo(todo.id, editText.trim()); // Update todo with new text directly
       setIsEditing(false); // Exit edit mode after saving
     }
   };
@@ -76,5 +77,4 @@ TodoCard.propTypes = {
     completed: PropTypes.bool.isRequired,
   }).isRequired,
 };
-
 

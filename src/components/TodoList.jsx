@@ -1,20 +1,18 @@
 import React from 'react';
-import TodoCard from './TodoCard';
 import PropTypes from 'prop-types';
+import TodoCard from './TodoCard';
 
-export default function TodoList(props) {
-  const { todos, handleEditTodo, handleDeleteTodo, handleToggleTodo } = props;
-
+export default function TodoList({ todos, handleEditTodo, handleDeleteTodo, handleToggleTodo }) {
   return (
-    <ul className="main">
+    <ul>
       {todos.map((todo, index) => (
         <TodoCard
-          key={todo.id} // Use todo.id as the unique key
+          key={todo.id}
           index={index}
+          todo={todo}
           handleEditTodo={handleEditTodo}
           handleDeleteTodo={handleDeleteTodo}
           handleToggleTodo={handleToggleTodo}
-          todo={todo} // Pass the todo object directly
         />
       ))}
     </ul>
@@ -22,13 +20,16 @@ export default function TodoList(props) {
 }
 
 TodoList.propTypes = {
-  todos: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
-  })).isRequired,
+  todos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
+    })
+  ).isRequired,
   handleEditTodo: PropTypes.func.isRequired,
   handleDeleteTodo: PropTypes.func.isRequired,
   handleToggleTodo: PropTypes.func.isRequired,
 };
+
 

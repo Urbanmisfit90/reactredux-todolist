@@ -12,27 +12,14 @@ function App() {
   }
 
   function handleAddTodos(newTodoText) {
-    if (editingTodoId) {
-      // Update existing todo
-      const updatedTodos = todos.map(todo =>
-        todo.id === editingTodoId
-          ? { ...todo, text: newTodoText }
-          : todo
-      );
-      persistData(updatedTodos);
-      setTodos(updatedTodos);
-      setEditingTodoId(null); // Clear editing state
-    } else {
-      // Add new todo
-      const newTodo = {
-        id: Date.now().toString(), // Unique ID
-        text: newTodoText,
-        completed: false
-      };
-      const newTodoList = [...todos, newTodo];
-      persistData(newTodoList);
-      setTodos(newTodoList);
-    }
+    const newTodo = {
+      id: Date.now().toString(), // Unique ID
+      text: newTodoText,
+      completed: false
+    };
+    const newTodoList = [...todos, newTodo];
+    persistData(newTodoList);
+    setTodos(newTodoList);
     setTodoValue('');
   }
 
@@ -42,12 +29,14 @@ function App() {
     setTodos(newTodoList);
   }
 
-  function handleEditTodo(id) {
-    const todoToEdit = todos.find(todo => todo.id === id);
-    if (todoToEdit) {
-      setTodoValue(todoToEdit.text); // Set the text for editing
-      setEditingTodoId(id); // Set the editingTodoId to the current todo's id
-    }
+  function handleEditTodo(id, newText) {
+    const updatedTodos = todos.map(todo =>
+      todo.id === id
+        ? { ...todo, text: newText }
+        : todo
+    );
+    persistData(updatedTodos);
+    setTodos(updatedTodos);
   }
 
   function handleToggleTodo(index) {
@@ -86,4 +75,5 @@ function App() {
 }
 
 export default App;
+
 
