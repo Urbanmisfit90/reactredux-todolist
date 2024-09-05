@@ -19,6 +19,7 @@ export default function TodoInput(props) {
 
   return (
     <header>
+      <h1>Todo List App</h1>
       <input 
         value={todoValue} 
         onChange={handleInputChange} 
